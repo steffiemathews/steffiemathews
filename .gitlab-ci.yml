@@ -1,0 +1,21 @@
+# Builds the site and publishes it with GitLab Pages on every push to the default branch.
+# The repo stays private; only the built site is published.
+#
+# Address: https://<user>.gitlab.io/<project>/ (or https://<user>.gitlab.io/ when the
+# project is named <user>.gitlab.io: then the site sits at the root).
+
+create-pages:
+  stage: deploy
+  image: node:22
+  pages: true            # marks this as the Pages job (serves the "public" artifact)
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+  script:
+    - npm ci
+    - 'if [ "${CI_PROJECT_NAME%.gitlab.io}" != "$CI_PROJECT_NAME" ]; then export BASE_PATH=/; else export BASE_PATH="/$CI_PROJECT_NAME/"; fi'
+    - 'echo "Building with base path $BASE_PATH"'
+    - npm run build
+    - mv dist public
+  artifacts:
+    paths:
+      - public

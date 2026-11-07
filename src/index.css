@@ -1,0 +1,52 @@
+@import "tailwindcss";
+@import "./theme/theme.css";
+@import "./styles/intro.css";
+@import "./styles/home.css";
+@import "./styles/signature.css";
+
+/* Tailwind utilities that point at the theme variables, e.g.
+   bg-page, bg-surface, text-fg, text-fg-2, text-muted, text-accent, bg-accent,
+   border-line, border-timeline, bg-chip, shadow-card, font-mono.
+   Change colours in theme/theme.css, not here. */
+@theme inline {
+  --color-page: var(--bg);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-chip: var(--chip);
+  --color-accent: var(--accent);
+  --color-accent-solid: var(--accent-solid);
+  --color-card: var(--card-bg);
+  --color-card-border: var(--card-border);
+  --color-timeline: var(--timeline);
+  --color-chip-border: var(--chip-border);
+  --shadow-card: var(--card-shadow);
+  --shadow-card-hover: var(--card-shadow-hover);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+html {
+  overflow-y: scroll;
+  overflow-x: clip;
+  background: var(--bg);
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--fg);
+  transition: background-color .3s, color .3s;
+}
+
+::selection { background: color-mix(in srgb, var(--accent-solid) 35%, transparent); }
+
+/* staged reveal after the loading screen (body.play is set when it ends) */
+body.play .rise { animation: rise .6s cubic-bezier(.2, .7, .2, 1) both; animation-delay: var(--d, 0ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}

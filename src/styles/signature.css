@@ -1,0 +1,23 @@
+/* Handwritten signature (components/Signature.jsx): drawn like a pen stroke. */
+.signature svg { display: block; }
+.sig-ink, .sig-flourish {
+  fill: none; stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 1 2; stroke-dashoffset: 0;  /* fully drawn at rest */
+}
+.sig-ink { stroke: var(--fg); stroke-width: 2.2; }
+.sig-dot { stroke-width: 3.4; }
+.sig-flourish { stroke: var(--accent-solid); stroke-width: 2; }
+
+/* written once the loading screen is gone (App sets body.play) */
+body.play .sig-ink { animation: sig-write 2.2s cubic-bezier(.45, .05, .55, .95) .3s both; }
+body.play .sig-late { animation-delay: 2.5s; animation-duration: .25s; }
+body.play .sig-dot { animation-delay: 2.75s; animation-duration: .1s; }
+body.play .sig-flourish { animation: sig-write .8s ease-out 2.9s both; }
+
+/* and again on hover */
+.signature:hover .sig-ink { animation: sig-write 1.6s cubic-bezier(.45, .05, .55, .95) both; }
+.signature:hover .sig-late { animation-delay: 1.65s; animation-duration: .2s; }
+.signature:hover .sig-dot { animation-delay: 1.85s; animation-duration: .1s; }
+.signature:hover .sig-flourish { animation: sig-write .6s ease-out 1.95s both; }
+
+@keyframes sig-write { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
